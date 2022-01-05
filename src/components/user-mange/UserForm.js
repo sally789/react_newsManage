@@ -18,6 +18,7 @@ const UserForm = forwardRef((_props, ref) => {
   useEffect(() => {
     axios.get('http://localhost:8000/roles').then((response) => {
       setroleList(response.data)
+      console.log(response.data)
     })
   }, [])
   const isSuperManage = (value) => {
@@ -71,7 +72,12 @@ const UserForm = forwardRef((_props, ref) => {
       >
         <Select disabled={regiondisable}>
           {regionList.map((regionItem) => (
-            <Option value={regionItem.value} key={regionItem.id}>{regionItem.title}</Option>
+            <Option
+              value={regionItem.value}
+              key={regionItem.id}
+            >
+              {regionItem.title}
+            </Option>
           ))}
         </Select>
       </Form.Item>

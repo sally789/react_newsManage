@@ -1,6 +1,6 @@
 import React from 'react'
 import {
-  HashRouter, Switch, Route,
+  HashRouter, Switch, Route, Redirect,
 } from 'react-router-dom'
 import Login from '../views/login/login'
 import News from '../views/News/news'
@@ -12,7 +12,9 @@ export default function index() {
         <Route path="/login" component={Login} />
         <Route
           path="/"
-          render={() => (<News />)}
+          render={() => (
+            localStorage.getItem('token') ? <News /> : <Redirect to="/login" />
+          )}
         />
       </Switch>
     </HashRouter>

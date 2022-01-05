@@ -8,8 +8,10 @@ const { Sider } = Layout
 const { SubMenu } = Menu
 function SideMenu(props) {
   const [state, setstate] = useState([])
+  const { role: { rights } } = JSON.parse(localStorage.getItem('token'))
   useEffect(() => {
     axios.get('http://localhost:8000/rights?_embed=children').then((response) => {
+      // console.log(response.data)
       setstate(response.data)
     })
   }, [])
@@ -18,7 +20,8 @@ function SideMenu(props) {
   const opened = [`/${location.pathname.split('/')[1]}`]
   // console.log(opened)
   const renderMenu = (menuList) => menuList.map((menu) => {
-    if (menu.children) {
+    const { children = [] } = menu
+    if (children.length > 0 && rights.includes(menu.key)) {
       return (
         <SubMenu key={menu.key} title={menu.title} icon={menu.icon}>
           {
@@ -27,16 +30,19 @@ function SideMenu(props) {
         </SubMenu>
       )
     }
-    return (
-      <Menu.Item
-        key={menu.key}
-        icon={menu.icon}
-        onClick={() => {
-          history.push(menu.key)
-        }}
-      >
-        {menu.title}
-      </Menu.Item>
+    // console.log(rights.includes(menu.key))
+    return (rights.includes(menu.key)
+      ? (
+        <Menu.Item
+          key={menu.key}
+          icon={menu.icon}
+          onClick={() => {
+            history.push(menu.key)
+          }}
+        >
+          {menu.title}
+        </Menu.Item>
+      ) : null
     )
   })
 

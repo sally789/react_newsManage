@@ -27,5 +27,8 @@ module.exports = {
     'import/no-extraneous-denpendencies': 0,
     'import/prefer-default-export': 0,
     'react/prop-types': 0,
+    'no-nonoctal-decimal-escape': 0,
+    'no-unsafe-optional-chaining': 0,
+    'no-shadow': 0,
   },
 }
